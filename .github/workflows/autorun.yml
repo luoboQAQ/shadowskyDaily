@@ -1,0 +1,26 @@
+name: GitHub Actions Auto Run
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 0 * * *'
+
+jobs:
+  bot:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python
+      uses: actions/setup-python@v1
+    - name: Install requirements
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: shadowskyDaily
+      env:  
+        SHADOWSKY_ACCOUNT: ${{ secrets.SHADOWSKY_ACCOUNT }}
+        SHADOWSKY_PSW: ${{ secrets.SHADOWSKY_PSW }}
+        CORPID: ${{ secrets.CORPID }}
+        SECRET: ${{ secrets.SECRET }}
+        AGENTID: ${{ secrets.AGENTID }}
+      run: python shadowskyDaily.py
