@@ -23,4 +23,5 @@ jobs:
         CORPID: ${{ secrets.CORPID }}
         SECRET: ${{ secrets.SECRET }}
         AGENTID: ${{ secrets.AGENTID }}
+        SEND_CODE: ${{ secrets.SEND_CODE }}
       run: python shadowskyDaily.py
