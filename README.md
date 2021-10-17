@@ -17,7 +17,14 @@
    ```
    SHADOWSKY_ACCOUNT=账号
    SHADOWSKY_PSW=密码
+   ```
+
+3. （可选）设置企业微信推送
+
+   在仓库的`secrets`，填入以下内容
+
+   ```
+   SEND_CODE=1
    CORPID=企业ID
    AGENTID=应用ID
    SECRET=应用secret
-   ```

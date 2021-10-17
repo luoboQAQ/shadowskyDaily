@@ -27,8 +27,17 @@ def send_to_wecom(text, wecom_cid, wecom_aid, wecom_secret, wecom_touid='@all'):
 
 def main():
     # 通过github的secrets输入到此
-    email = os.environ["SHADOWSKY_ACCOUNT"]
-    psw = os.environ["SHADOWSKY_PSW"]
+    try:
+        email = os.environ["SHADOWSKY_ACCOUNT"]
+        psw = os.environ["SHADOWSKY_PSW"]
+    except KeyError:
+        print("请设置SHADOWSKY_ACCOUNT和SHADOWSKY_PSW")
+        exit(1)
+
+    try:
+        sendCode = os.environ["SEND_CODE"]
+    except KeyError:
+        sendCode = "0"
 
     shadowsky_headers = {
         "user-agent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'}
@@ -53,11 +62,13 @@ def main():
     print(remaining)
 
     text = "今天的签到已经完成啦QwQ"
-    if send_to_wecom(text+'\n'+end+'\n'+remaining+'\n', os.environ['CORPID'], os.environ['AGENTID'], os.environ['SECRET']):
-        print("企业微信推送成功")
-    else:
-        print("企业微信推送失败")
-        exit(1)
+
+    if sendCode == "1":
+        if send_to_wecom(text+'\n'+end+'\n'+remaining+'\n', os.environ['CORPID'], os.environ['AGENTID'], os.environ['SECRET']):
+            print("企业微信推送成功")
+        else:
+            print("企业微信推送失败")
+            exit(1)
 
 
 if __name__ == "__main__":
